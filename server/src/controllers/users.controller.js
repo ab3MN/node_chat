@@ -16,7 +16,15 @@ const getUserById = async (req, res) => {
   res.status(200).json(user);
 };
 
-const createUser = async (req, res) => {
+const signIn = async (req, res) => {
+  const { name } = req.body;
+
+  const user = await usersServices.getUsersByName(name);
+
+  res.status(200).json(user);
+};
+
+const signup = async (req, res) => {
   const { name } = req.body;
 
   if (!name) {
@@ -38,6 +46,7 @@ module.exports = {
   usersControllers: {
     getUsers: asyncHandler(getUsers),
     getUserById: asyncHandler(getUserById),
-    createUser: asyncHandler(createUser),
+    signIn: asyncHandler(signIn),
+    signup: asyncHandler(signup),
   },
 };

@@ -44,8 +44,9 @@ const removeRomm = async (req, res) => {
   const room = await roomServices.getRoomById(id);
 
   if (!room) {
-    throw ApiError.badRequest('The room is exist');
+    throw ApiError.badRequest("The room isn't exist");
   }
+
   await roomServices.removeRoom(id);
 
   res.sendStatus(204);
