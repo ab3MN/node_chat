@@ -1,30 +1,19 @@
 import { getUserById } from '@/api/users.api';
 import useLocaLStorage from '@/hooks/useLocaLStorage';
 import { User } from '@/types/User';
-import { useCallback, useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 export const useAuth = () => {
   const { getItem } = useLocaLStorage('user');
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [loading, setLoading] = useState(true);
+  const user = getItem() as User | null;
 
-  const isAuth = useCallback(async () => {
-    const user = getItem() as User | null;
+  const { data, isLoading, error } = useQuery<User | null, Error>({
+    queryKey: ['user', user?.id],
+    queryFn: () => (user?.id ? getUserById(user.id) : Promise.resolve(null)),
+    enabled: !!user?.id,
+  });
 
-    if (user) {
-      try {
-        const isUserExist = !!(await getUserById(user.id));
-        setIsAuthenticated(isUserExist);
-      } catch {
-        setIsAuthenticated(false);
-      }
-    }
-    setLoading(false);
-  }, [getItem]);
+  const isAuthenticated = !!data && !error;
 
-  useEffect(() => {
-    isAuth();
-  }, [isAuth]);
-
-  return { isAuthenticated, loading };
+  return { isAuthenticated, isLoading };
 };

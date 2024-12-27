@@ -3,7 +3,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { ReactNode } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
-const ProtectedRoute = (): ReactNode => {
+const AuthRoute = (): ReactNode => {
   const { isAuthenticated, isLoading } = useAuth();
   const location = useLocation();
 
@@ -15,7 +15,7 @@ const ProtectedRoute = (): ReactNode => {
     return <Navigate to='/chat' />;
   }
 
-  return isAuthenticated ? <Outlet /> : <Navigate to='/signin' replace />;
+  return <Outlet />;
 };
 
-export default ProtectedRoute;
+export default AuthRoute;

@@ -3,28 +3,38 @@ import { Routes, Route } from 'react-router-dom';
 import { Suspense } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Loader } from './components/Loader/Loader';
-import { protectedRoutes } from './routing/ProtectedRoutes';
-import { ChatPage, NotFoundPage } from './routing/routes';
+import { ChatsPage, NotFoundPage, SignInPage, SignUpPage, ChatPage } from './routing/routes';
 import { ChatForm } from './components/Chat/ChatForm';
+import ProtectedRoute from './routing/ProtectedRoute';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import AuthRoute from './routing/AuthRoute';
+
+const queryClient = new QueryClient();
 
 export const App = () => (
-  <BrowserRouter>
-    <ToastContainer />
-    <Suspense fallback={<Loader />}>
-      <Routes>
-        <Route path='/' element={protectedRoutes.chat} />
+  <QueryClientProvider client={queryClient}>
+    <BrowserRouter>
+      <ToastContainer />
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route element={<ProtectedRoute />}>
+            <Route path='/' element={<ChatsPage />} />
 
-        <Route path='/signin' element={protectedRoutes.signin} />
-        <Route path='/signup' element={protectedRoutes.signup} />
+            <Route path='/chat' element={<ChatsPage />}>
+              <Route path=':chatid?' element={<ChatPage />} />
+              <Route index path='create' element={<ChatForm />} />
+              <Route index element={<div>No selected chat</div>} />
+            </Route>
+          </Route>
 
-        <Route path='/chat' element={protectedRoutes.chat}>
-          <Route path=':chatid?' element={<ChatPage />} />
-          <Route path='create' element={<ChatForm />} />
-          <Route index element={<div>No selected chat</div>} />
-        </Route>
+          <Route element={<AuthRoute />}>
+            <Route path='/signin' element={<SignInPage />} />
+            <Route path='/signup' element={<SignUpPage />} />
+          </Route>
 
-        <Route path='*' element={<NotFoundPage />} />
-      </Routes>
-    </Suspense>
-  </BrowserRouter>
+          <Route path='*' element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+  </QueryClientProvider>
 );
