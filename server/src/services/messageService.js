@@ -20,7 +20,7 @@ const getMessageById = async (id) => {
 const getMessagesByRoom = async (roomId) => {
   const messages = await Message.findAll({
     where: { roomId },
-    order: [['createdAt', 'DESC']],
+    order: [['createdAt', 'ASC']],
   });
 
   return messages;

@@ -1,12 +1,15 @@
 'use strict';
 
 require('dotenv').config();
-
 const { createServer } = require('./createServer');
+const { WebSocketServer } = require('ws');
+
+const { initializeWSS } = require('./wss');
 
 const port = process.env.SERVER_PORT || 5700;
 
-createServer().listen(port, () => {
-  /* eslint-disable-next-line no-console */
+const server = createServer().listen(port, () => {
   console.log(`Server is running on localhost: ${port}`);
 });
+
+initializeWSS(server);

@@ -2,7 +2,6 @@
 
 const express = require('express');
 const cors = require('cors');
-const cookieParser = require('cookie-parser');
 
 const { errorMiddleware } = require('./middlewares/errorMiddleware');
 const { usersRouter } = require('./routes/users.route');
@@ -18,13 +17,13 @@ function createServer() {
 
   /* CORS  */
   const options = {
-    origin: true,
+    origin: '*',
     methods: 'GET, POST, PUT, DELETE , PATCH',
     allowedHeaders: 'Content-Type',
     credentials: true,
   };
 
-  app.use(cors(options), cookieParser(), express.json());
+  app.use(cors(options), express.json());
 
   /* ROUTES */
   app.use('/users', usersRouter);

@@ -13,8 +13,6 @@ const SignIn = (): ReactNode => {
   const { setItem } = useLocaLStorage('user');
   const navigate = useNavigate();
 
-  console.log('aa');
-
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
