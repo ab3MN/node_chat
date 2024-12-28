@@ -1,29 +1,21 @@
-import { ChangeEvent, FormEvent, ReactNode, useState } from 'react';
-
+import { ChangeEvent, FormEvent, ReactNode, useContext, useState } from 'react';
 import { TextField } from '@mui/material';
-import useLocaLStorage from '@/hooks/useLocaLStorage';
-import { createUser } from '@/api/users.api';
-import notification from '@/utils/notification';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 import { SubmitButton } from '@/UI/SubmitButton';
 import { FormContainer } from '@/UI/FormContainer';
+import { UserContext } from '@/context/UserContext';
 
 const Login = (): ReactNode => {
   const [name, setName] = useState('');
-  const { setItem } = useLocaLStorage('user');
-  const navigate = useNavigate();
+  const { handleSignUp } = useContext(UserContext);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
-    createUser(name)
-      .then((user) => {
-        setItem(user);
-        navigate('/chat');
-      })
-      .catch((err) => {
-        notification('error', err);
-      });
+    handleSignUp(name).then(() => {
+      setName('');
+    });
   };
 
   return (

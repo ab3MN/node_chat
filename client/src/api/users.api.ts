@@ -5,7 +5,7 @@ import { Response } from '@/types/Resonse';
 import { User } from '@/types/User';
 import { handleRequest } from '@/utils/handleRequest';
 
-export const createUser = async (name: string): Promise<User> => {
+export const signUp = async (name: string): Promise<User> => {
   const res: Response<User> = await handleRequest(axios.post(`${BASE_URL}/${USERS}/signup`, { name }));
 
   return res.data;

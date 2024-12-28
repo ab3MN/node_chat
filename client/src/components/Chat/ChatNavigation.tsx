@@ -1,4 +1,5 @@
 import { ChatContext } from '@/context/ChatContext';
+import { UserContext } from '@/context/UserContext';
 import { Box, ListItem } from '@mui/material';
 import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -12,10 +13,15 @@ const NavList = styled.ul`
   .current {
     color: rgb(244, 8, 169);
   }
+
+  li {
+    padding: 0;
+  }
 `;
 
 export const ChatNavigation = () => {
   const { chats } = useContext(ChatContext);
+  const { handleLogOut } = useContext(UserContext);
 
   return (
     <Box>
@@ -29,16 +35,21 @@ export const ChatNavigation = () => {
         }}
       >
         {chats.map(({ name, id }) => (
-          <ListItem key={id} style={{ padding: 0 }}>
+          <ListItem key={id}>
             <NavLink to={`/chat/${id}`} className={({ isActive }) => (isActive ? 'current' : '')}>
               {name}
             </NavLink>
           </ListItem>
         ))}
-        <ListItem style={{ padding: 0 }}>
+
+        <ListItem>
           <NavLink to='/chat/create' className={({ isActive }) => (isActive ? 'current' : '')}>
             Create Chat
           </NavLink>
+        </ListItem>
+
+        <ListItem style={{ color: 'red', fontWeight: 'bold', cursor: 'pointer' }} onClick={handleLogOut}>
+          Log Out
         </ListItem>
       </NavList>
     </Box>
