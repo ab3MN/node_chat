@@ -17,8 +17,8 @@ export const Chat: FC<Props> = ({ chat }) => {
       <Typography component='h2' style={{ textAlign: 'center', margin: '1rem' }}>
         {chat.name}
       </Typography>
-      <MessageList />
-      <MessageForm />
+      <MessageList roomId={chat.id} />
+      <MessageForm roomId={chat.id} />
       <Button
         type='button'
         variant='contained'

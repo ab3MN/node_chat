@@ -17,13 +17,11 @@ const createMessage = async (req, res) => {
   const { text, roomId, userId, userName } = req.body;
 
   const room = await roomServices.getRoomById(roomId);
-
   if (!room) {
     throw ApiError.notFound("The room doesn't exist");
   }
 
   const user = await usersServices.getUsersById(userId);
-
   if (!user) {
     throw ApiError.notFound("The user doesn't exist");
   }
@@ -36,6 +34,7 @@ const createMessage = async (req, res) => {
   );
 
   messageEmitter.emit('message', message);
+  res.status(201).json(message);
 };
 
 const getMessage = (_, res) => {

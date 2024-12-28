@@ -1,39 +1,47 @@
 import { getMessages } from '@/api/messages.api';
 import { Message } from '@/types/Message';
 import notification from '@/utils/notification';
-import { List, ListItem } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { List } from '@mui/material';
+import { FC, useEffect, useState } from 'react';
+import { MessageItem } from './MessageItem';
 
-export const MessageList = () => {
+interface Props {
+  roomId: string;
+}
+
+export const MessageList: FC<Props> = ({ roomId }) => {
   const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:5700');
 
-    ws.onopen = () => {
-      ws.send('Hello Monkey D Luffy!');
-    };
-
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
-      setMessages((state) => [...state, message]);
+
+      if (message.roomId === roomId) {
+        setMessages((state) => [...state, message]);
+      }
     };
 
     ws.onerror = () => {
-      notification('error', 'Contection is lost');
+      notification('error', 'Connection is lost');
     };
-  }, []);
+
+    return () => {
+      ws.close();
+    };
+  }, [roomId]);
 
   useEffect(() => {
-    getMessages('dae0833c-c39b-4b75-a3f6-cb8c72d6a92d')
+    getMessages(roomId)
       .then(setMessages)
       .catch((err) => notification('error', err));
-  }, []);
+  }, [roomId]);
 
   return (
-    <List>
+    <List style={{ display: 'flex', flexDirection: 'column' }}>
       {messages.map((message) => (
-        <ListItem key={message.id}>{message.text}</ListItem>
+        <MessageItem key={message.id} message={message} />
       ))}
     </List>
   );

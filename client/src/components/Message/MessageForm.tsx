@@ -1,23 +1,25 @@
 import { sendMessage } from '@/api/messages.api';
+import { UserContext } from '@/context/UserContext';
 import { SubmitButton } from '@/UI/SubmitButton';
 import { Box, TextField } from '@mui/material';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FC, FormEvent, useContext, useState } from 'react';
 
-export const MessageForm = () => {
+interface Props {
+  roomId: string;
+}
+
+export const MessageForm: FC<Props> = ({ roomId }) => {
   const [text, setText] = useState('');
+  const { user } = useContext(UserContext);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const message = {
-      userName: 'Monkey D Luffy',
-      text: 'I am Luffy',
-      userId: 'f48449bf-014c-42f9-b747-435b302c290a',
-      roomId: 'dae0833c-c39b-4b75-a3f6-cb8c72d6a92d',
-    };
+    if (!user || !text.trim()) return;
 
-    sendMessage(message);
+    const { name, id } = user;
 
+    sendMessage({ userName: name, text, userId: id, roomId });
     setText('');
   };
 

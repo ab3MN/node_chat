@@ -6,6 +6,8 @@ interface IUserContext {
   handleSignIn: (name: string) => Promise<void>;
   handleSignUp: (name: string) => Promise<void>;
   handleLogOut: () => void;
+  isAuthenticated: boolean;
+  isLoading: boolean;
 }
 
 export const UserContext = createContext<IUserContext>({
@@ -13,4 +15,6 @@ export const UserContext = createContext<IUserContext>({
   handleSignIn: async () => {},
   handleSignUp: async () => {},
   handleLogOut: () => {},
+  isAuthenticated: false,
+  isLoading: false,
 });

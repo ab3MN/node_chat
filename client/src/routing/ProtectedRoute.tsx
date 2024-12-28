@@ -5,6 +5,7 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 const ProtectedRoute = (): ReactNode => {
   const { isAuthenticated, isLoading } = useAuth();
+
   const location = useLocation();
 
   if (isLoading) {

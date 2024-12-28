@@ -11,14 +11,14 @@ export const signUp = async (name: string): Promise<User> => {
   return res.data;
 };
 
-export const getUserById = async (id: string): Promise<User> => {
-  const res: Response<User> = await handleRequest(axios.get(`${BASE_URL}/${USERS}/${id}`));
+export const signIn = async (name: string): Promise<User> => {
+  const res: Response<User> = await handleRequest(axios.post(`${BASE_URL}/${USERS}/signin`, { name }));
 
   return res.data;
 };
 
-export const signIn = async (name: string): Promise<User> => {
-  const res: Response<User> = await handleRequest(axios.post(`${BASE_URL}/${USERS}/signin`, { name }));
+export const getUserById = async (id: string): Promise<User> => {
+  const res: Response<User> = await handleRequest(axios.get(`${BASE_URL}/${USERS}/${id}`));
 
   return res.data;
 };
