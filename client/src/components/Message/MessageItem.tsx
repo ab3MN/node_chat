@@ -15,7 +15,7 @@ export const MessageItem: FC<IProps> = ({ message }) => {
 
   return (
     <ListItem
-      style={{
+      sx={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: isCurrentUser ? 'flex-end' : 'self-start',

@@ -1,3 +1,4 @@
+import { BLUE, PINK, RED } from '@/constants/colors';
 import { ChatContext } from '@/context/ChatContext';
 import { UserContext } from '@/context/UserContext';
 import { Box, ListItem } from '@mui/material';
@@ -8,10 +9,10 @@ import styled from 'styled-components';
 const NavList = styled.ul`
   a {
     text-decoration: none;
-    color: rgb(56, 64, 229, 0.8);
+    color: ${BLUE};
   }
   .current {
-    color: rgb(244, 8, 169);
+    color: ${PINK};
   }
 
   li {
@@ -48,7 +49,7 @@ export const ChatNavigation = () => {
           </NavLink>
         </ListItem>
 
-        <ListItem style={{ color: 'red', fontWeight: 'bold', cursor: 'pointer' }} onClick={handleLogOut}>
+        <ListItem style={{ color: RED, fontWeight: 'bold', cursor: 'pointer' }} onClick={handleLogOut}>
           Log Out
         </ListItem>
       </NavList>

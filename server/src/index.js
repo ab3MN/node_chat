@@ -2,7 +2,6 @@
 
 require('dotenv').config();
 const { createServer } = require('./createServer');
-const { WebSocketServer } = require('ws');
 
 const { initializeWSS } = require('./wss');
 

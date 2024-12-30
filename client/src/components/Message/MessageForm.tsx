@@ -27,11 +27,11 @@ export const MessageForm: FC<Props> = ({ roomId }) => {
     <Box
       component='form'
       onSubmit={handleSubmit}
-      style={{ display: 'flex', maxWidth: '100%', columnGap: '1rem', margin: 'auto 0 2rem' }}
+      sx={{ display: 'flex', maxWidth: '100%', columnGap: '1rem', m: 'auto 0 2rem' }}
     >
       <TextField
         name='message'
-        style={{ flexBasis: '400%' }}
+        sx={{ flexBasis: '400%' }}
         autoFocus
         size='small'
         type='text'

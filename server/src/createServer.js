@@ -7,10 +7,6 @@ const { errorMiddleware } = require('./middlewares/errorMiddleware');
 const { usersRouter } = require('./routes/users.route');
 const { roomsRouter } = require('./routes/rooms.route');
 const { messagesRouter } = require('./routes/messages.route');
-// const { sequelize } = require('./utils/db');
-// const { User } = require('./models/user');
-// const { Room } = require('./models/room');
-// const { Message } = require('./models/Message');
 
 function createServer() {
   const app = express();

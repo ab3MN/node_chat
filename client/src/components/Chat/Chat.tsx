@@ -13,8 +13,8 @@ export const Chat: FC<Props> = ({ chat }) => {
   const { removeChat } = useContext(ChatContext);
 
   return (
-    <Box style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column' }}>
-      <Typography component='h2' style={{ textAlign: 'center', margin: '1rem' }}>
+    <Box sx={{ display: 'flex', minHeight: '100vh', flexDirection: 'column' }}>
+      <Typography component='h2' sx={{ textAlign: 'center', m: '1rem' }}>
         {chat.name}
       </Typography>
       <MessageList roomId={chat.id} />
@@ -25,7 +25,7 @@ export const Chat: FC<Props> = ({ chat }) => {
         onClick={() => {
           removeChat(chat.id);
         }}
-        style={{ display: 'block', margin: '0 auto 2rem ' }}
+        sx={{ display: 'block', m: '0 auto 2rem ' }}
       >
         Delete Chat
       </Button>
