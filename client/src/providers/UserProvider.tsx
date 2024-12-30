@@ -4,7 +4,7 @@ import useLocaLStorage from '@/hooks/useLocaLStorage';
 import { User } from '@/types/User';
 import notification from '@/utils/notification';
 import { useQuery } from '@tanstack/react-query';
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const UserProvider = ({ children }: { children: ReactNode }): ReactNode => {
@@ -15,16 +15,18 @@ export const UserProvider = ({ children }: { children: ReactNode }): ReactNode =
 
   const { data, isLoading, error } = useQuery<User | null, Error>({
     queryKey: ['user', storagedUser?.id],
-    queryFn: () => (storagedUser?.id ? getUserById(storagedUser.id) : Promise.resolve(null)),
+    queryFn: async () => {
+      if (storagedUser?.id) {
+        const res = await getUserById(storagedUser.id);
+        if (res.id) {
+          setUser(res);
+          setItem(res);
+        }
+      }
+      return null;
+    },
     enabled: !user && !!storagedUser?.id,
   });
-
-  useEffect(() => {
-    if (data) {
-      setUser(data);
-      setItem(data);
-    }
-  }, [data, setItem]);
 
   const isAuthenticated = !!user || (!!data && !error);
 

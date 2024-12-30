@@ -19,7 +19,7 @@ export const MessageItem: FC<IProps> = ({ message }) => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: isCurrentUser ? 'flex-end' : 'self-start',
-        width: '70%',
+        width: '48%',
         rowGap: '5px',
         backgroundColor: isCurrentUser ? BLUE : LIGHT_GREY,
         color: isCurrentUser ? WHITE : BLACK,

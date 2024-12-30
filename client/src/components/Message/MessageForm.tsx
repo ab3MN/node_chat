@@ -31,11 +31,11 @@ export const MessageForm: FC<Props> = ({ roomId }) => {
     >
       <TextField
         name='message'
-        style={{ flexBasis: '300%' }}
+        style={{ flexBasis: '400%' }}
         autoFocus
         size='small'
         type='text'
-        // required
+        required
         value={text}
         fullWidth
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
